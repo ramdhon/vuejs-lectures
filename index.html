@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Todo App</title>
+  </head>
+  <body>
+    <div id="app">
+      <img v-bind:src="imgURL" alt="Hacktiv8 Logo">
+      <h1>Todo App</h1>
+      <ul>
+        <li v-for="(todo, index) in todos">{{ todo.title }}</li>
+      </ul>
+      <form method="post" v-on:submit.prevent="addTodo">
+        <input
+          type="text"
+          v-model="value"
+          placeholder="Title"
+          autocomplete="off"
+          autofocus>
+        <input type="submit">
+      </form>
+    </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+      var serverUrl = 'http://localhost:3000';
+
+      var app = new Vue({
+        el: '#app',
+
+        /* state */
+        data: {
+          price: 10000,
+          value: '',
+          todos: [],
+          imgURL: 'https://hacktiv8.com/img/logo-hacktiv8_bordered.png__vzu2vhp2VRX%2Bewg7J0bPlaAf7ee5fc69819b5ef3849344c119f5e18',
+        },
+
+        computed: {
+          idrPrice: function() {
+            return 'IDR ' + this.price.toLocaleString();
+          }
+        },
+
+        watch: {
+          price: function() {
+            console.log('Price updated!');
+          },
+        },
+
+        created: function() {
+          axios
+            .get(serverUrl + '/todos')
+            .then(({ data }) => {
+              this.todos = data;
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        },
+
+        methods: {
+          addTodo() {
+            axios
+              .post(serverUrl + '/todos', { title: this.value })
+              .then(({data}) => {
+                this.todos.push(data);
+                this.value = '';
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          }
+        },
+      });
+    </script>
+  </body>
+</html>
