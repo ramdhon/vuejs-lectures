@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Todo with Components</title>
+  <link
+    rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+    crossorigin="anonymous">
+</head>
+<body>
+  <div id="app" class="container">
+    <h1 class="mt-2">Todo with Components</h1>
+
+    <custom-alert>
+      <h2>My alert with slot</h2>
+      <p>Paragraph of my alert</p>
+    </custom-alert>
+
+    <add-todo-form v-on:submit-todo="submitTodo"></add-todo-form>
+    <todo-list v-bind:todos="todos"></todo-list>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+  <!-- Component registration -->
+  <script src="/js/components/add-todo-form.js"></script>
+  <script src="/js/components/todo-list.js"></script>
+  <script src="/js/components/todo-item.js"></script>
+  <script src="/js/components/custom-alert.js"></script>
+
+  <!-- new Vue instance -->
+  <script src="/js/main.js"></script>
+</body>
+</html>
